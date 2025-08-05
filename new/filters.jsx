@@ -13,15 +13,23 @@ export default function Filters() {
   };
 
   return (
-    <div>
-      <select onChange={(e) => updateFilter('platform', e.target.value)} defaultValue="android">
+    <div className="flex gap-2">
+      <select
+        onChange={(e) => updateFilter('platform', e.target.value)}
+        defaultValue="android"
+        className="border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none"
+      >
         <option value="android">Android</option>
         <option value="ios">iOS</option>
         <option value="web">Web</option>
       </select>
 
-      <select onChange={(e) => updateFilter('affluence', e.target.value)} defaultValue="AF1">
-        {['AF1','AF2','AF3','AF4','AF5','AF6'].map((af) => (
+      <select
+        onChange={(e) => updateFilter('affluence', e.target.value)}
+        defaultValue="AF1"
+        className="border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none"
+      >
+        {['AF1', 'AF2', 'AF3', 'AF4', 'AF5', 'AF6'].map((af) => (
           <option key={af} value={af}>{af}</option>
         ))}
       </select>
