@@ -1,0 +1,362 @@
+<!-- Save this as petal-buttons.html and open in a browser -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Petal Layout — 5 Buttons</title>
+
+  <!-- Optional: Google font (browser will fetch when online) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0f1020;
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      /* Nykaa-inspired palette */
+      --pink-1: #FF007F;
+      --pink-2: #FF66A3;
+      --pink-3: #FFD1DC;
+      --accent-1: linear-gradient(135deg, var(--pink-1), var(--pink-2));
+      --accent-2: linear-gradient(135deg, var(--pink-2), var(--pink-3));
+      --muted: rgba(255,255,255,0.07);
+      --glass: rgba(255,255,255,0.04);
+      --text: #fff;
+      --radius: 18px;
+      --size: clamp(320px, 60vmin, 640px);
+      --petal-size: calc(var(--size) / 2.4);
+      --hub-size: calc(var(--size) / 4.5);
+      --transition: 300ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* Page reset */
+    * { box-sizing: border-box; }
+    html,body { height:100%; }
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #080816 0%, #121223 60%);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+
+    /* Container card */
+    .card{
+      width:var(--size);
+      height:var(--size);
+      border-radius:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow:
+        0 8px 30px rgba(2,6,23,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.02);
+      position:relative;
+      overflow:visible;
+      padding: 28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* Subtle center label top-left */
+    .card .title{
+      position:absolute;
+      left:28px;
+      top:18px;
+      font-weight:600;
+      letter-spacing:0.2px;
+      font-size:14px;
+      color: rgba(255,255,255,0.9);
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .brand-dot{
+      width:12px;height:12px;border-radius:50%;
+      background:var(--pink-1);
+      box-shadow: 0 2px 8px rgba(255,0,127,0.2);
+    }
+
+    /* The circular stage that holds petals */
+    .stage{
+      width:100%;
+      height:100%;
+      display:grid;
+      place-items:center;
+      position:relative;
+      transform: translateY(-6px);
+    }
+
+    /* Center hub */
+    .hub{
+      position:absolute;
+      width:var(--hub-size);
+      height:var(--hub-size);
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      z-index:40;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), rgba(255,255,255,0.01) 40%), var(--glass);
+      border: 1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: default;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    }
+    .hub .label{
+      text-align:center;
+      font-weight:700;
+      font-size:0.95rem;
+      letter-spacing:0.4px;
+    }
+    .hub.pulse{
+      transform: scale(1.06);
+      box-shadow: 0 10px 40px rgba(255,20,120,0.18), 0 4px 18px rgba(0,0,0,0.6);
+    }
+    .hub .sub{
+      font-size:11px;
+      color: rgba(255,255,255,0.7);
+      margin-top:4px;
+      font-weight:600;
+    }
+
+    /* Petal buttons common */
+    .petal {
+      --r: 0deg; /* rotation variable per petal */
+      position:absolute;
+      width: var(--petal-size);
+      height: calc(var(--petal-size) * 0.62);
+      top:50%;
+      left:50%;
+      transform-origin: 50% 110%;
+      transform: translate(-50%, -50%) rotate(var(--r));
+      border: none;
+      outline: none;
+      cursor: pointer;
+      z-index:30;
+      display:grid;
+      place-items:center;
+      padding: 14px 22px;
+      border-radius: 120px 120px 30px 30px / 80px 80px 40px 40px; /* petal curve */
+      background: var(--accent-2);
+      color:var(--text);
+      box-shadow: 0 8px 28px rgba(2,6,23,0.6), 0 2px 8px rgba(255,0,127,0.06);
+      transition: transform var(--transition), filter var(--transition), box-shadow var(--transition);
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      text-align:center;
+      font-weight:700;
+      letter-spacing:0.2px;
+      font-size:0.96rem;
+    }
+
+    /* decorative glossy sheen using pseudo-element */
+    .petal::before{
+      content:"";
+      position:absolute;
+      left:6%;
+      top:6%;
+      width:86%;
+      height:56%;
+      border-radius: 60% 60% 20% 20% / 50% 50% 30% 30%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.04));
+      mix-blend-mode: overlay;
+      pointer-events:none;
+      opacity:0.9;
+      transform: translateY(-6%);
+    }
+
+    /* each petal gets its own gradient and rotation via class */
+    .p1 { --r: -72deg; background: linear-gradient(135deg, #FF007F 0%, #FF66A3 60%); }
+    .p2 { --r: -8deg;  background: linear-gradient(135deg, #FF66A3 0%, #FF9ABA 60%); }
+    .p3 { --r: 56deg;  background: linear-gradient(135deg, #FFB2CF 0%, #FFD1DC 60%); color:#2b0b13; }
+    .p4 { --r: 128deg; background: linear-gradient(135deg, #FF66A3 0%, #FF99BC 60%); }
+    .p5 { --r: 200deg; background: linear-gradient(135deg, #FF007F 0%, #FF66A3 60%); }
+
+    /* bloom on hover/focus */
+    .petal:hover,
+    .petal:focus{
+      transform: translate(-50%, -50%) rotate(var(--r)) scale(1.07);
+      box-shadow: 0 16px 48px rgba(2,6,23,0.75), 0 6px 22px rgba(255,0,127,0.12);
+    }
+
+    /* inner text and description stacked */
+    .petal .title { font-size:1rem; }
+    .petal .desc { font-size:11px; font-weight:600; opacity:0.9; margin-top:6px; color: rgba(255,255,255,0.9); font-weight:600; }
+
+    /* on small screens rotate and scale down */
+    @media (max-width:520px){
+      :root { --size: 92vmin; --petal-size: calc(var(--size) / 2.8); --hub-size: calc(var(--size) / 5.2); }
+      .petal { font-size:0.92rem; padding:12px 18px; }
+    }
+
+    /* focus ring for keyboard users */
+    .petal:focus-visible{
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6), 0 0 0 4px rgba(255,0,127,0.14);
+      transform: translate(-50%,-50%) rotate(var(--r)) scale(1.07);
+    }
+
+    /* small help text at bottom */
+    .hint{
+      position:absolute;
+      bottom:16px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:12px;
+      color: rgba(255,255,255,0.6);
+      border-radius:999px;
+      padding:6px 10px;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(4px);
+    }
+
+    /* little micro-interaction for click */
+    .petal:active{
+      transform: translate(-50%, -50%) rotate(var(--r)) scale(0.98);
+      transition: transform 120ms;
+    }
+
+    /* small badges on petals */
+    .badge{
+      position:absolute;
+      right:12px; top:12px;
+      background: rgba(0,0,0,0.25);
+      padding:6px 8px;
+      font-size:11px;
+      border-radius:999px;
+      font-weight:700;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      transform-origin:center;
+    }
+
+    /* small responsive tweaks for very small screens */
+    @media (max-width:360px){
+      .petal { width: calc(var(--petal-size) * 0.92); height: calc(var(--petal-size) * 0.56); font-size:0.9rem; }
+      .hub { width:calc(var(--hub-size) * 0.88); height: calc(var(--hub-size) * 0.88); }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="application" aria-label="Nykaa internal tool petal navigation">
+    <div class="title"><span class="brand-dot" aria-hidden="true"></span> Nykaa internal tools</div>
+
+    <section class="stage" aria-hidden="false">
+      <!-- center hub shows title and reacts to petal hover/focus -->
+      <div class="hub" id="hub" aria-hidden="false">
+        <div class="label">Nykaa Tool</div>
+        <div class="sub" id="hub-sub">Quick Actions</div>
+      </div>
+
+      <!-- Petals: each is a button element for accessibility -->
+      <button class="petal p1" id="b1" aria-label="Inventory dashboard" data-desc="Inventory">
+        <div class="title">Inventory</div>
+        <div class="desc">Stock & SKUs</div>
+        <div class="badge" aria-hidden="true">A</div>
+      </button>
+
+      <button class="petal p2" id="b2" aria-label="Orders and fulfillment" data-desc="Orders">
+        <div class="title">Orders</div>
+        <div class="desc">Fulfilment</div>
+        <div class="badge" aria-hidden="true">B</div>
+      </button>
+
+      <button class="petal p3" id="b3" aria-label="Campaigns and promotions" data-desc="Campaigns">
+        <div class="title">Campaigns</div>
+        <div class="desc">Marketing</div>
+        <div class="badge" aria-hidden="true">C</div>
+      </button>
+
+      <button class="petal p4" id="b4" aria-label="Analytics and insights" data-desc="Analytics">
+        <div class="title">Analytics</div>
+        <div class="desc">Insights</div>
+        <div class="badge" aria-hidden="true">D</div>
+      </button>
+
+      <button class="petal p5" id="b5" aria-label="Settings and integrations" data-desc="Settings">
+        <div class="title">Settings</div>
+        <div class="desc">Integrations</div>
+        <div class="badge" aria-hidden="true">E</div>
+      </button>
+
+      <div class="hint" id="kbd-hint">Tip: Use Tab to focus, Enter to open. Arrow keys move between petals.</div>
+    </section>
+  </main>
+
+  <script>
+    // JS: hub pulse on hover/focus of any petal + keyboard arrow nav
+    (function(){
+      const hub = document.getElementById('hub');
+      const petals = Array.from(document.querySelectorAll('.petal'));
+      const hubSub = document.getElementById('hub-sub');
+
+      function setHubPulse(on, text){
+        if(on) hub.classList.add('pulse');
+        else hub.classList.remove('pulse');
+        if(typeof text !== 'undefined') hubSub.textContent = text;
+      }
+
+      // mouse and focus interactions
+      petals.forEach((p, idx) => {
+        const desc = p.dataset.desc || p.querySelector('.title')?.textContent || 'Action';
+        p.addEventListener('mouseenter', () => setHubPulse(true, desc));
+        p.addEventListener('mouseleave', () => setHubPulse(false, 'Quick Actions'));
+        p.addEventListener('focus', () => setHubPulse(true, desc));
+        p.addEventListener('blur', () => setHubPulse(false, 'Quick Actions'));
+
+        // keyboard: Enter or Space triggers click action
+        p.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            p.click();
+          } else if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){
+            e.preventDefault();
+            // simple navigation: left = previous, right = next
+            let nextIdx = idx;
+            if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') nextIdx = (idx - 1 + petals.length) % petals.length;
+            if(e.key === 'ArrowRight' || e.key === 'ArrowDown') nextIdx = (idx + 1) % petals.length;
+            petals[nextIdx].focus();
+          }
+        });
+
+        // click handler - replace with real routing in your app
+        p.addEventListener('click', () => {
+          // demo action: small feedback and log. Replace with navigation logic.
+          setHubPulse(true, p.dataset.desc || p.querySelector('.title').textContent);
+          console.log('Action:', p.id, p.dataset.desc);
+          // micro animation to indicate action
+          p.animate([
+            { transform: getComputedStyle(p).transform },
+            { transform: getComputedStyle(p).transform + ' scale(0.98)' },
+            { transform: getComputedStyle(p).transform }
+          ], { duration: 260, easing: 'cubic-bezier(.2,.9,.3,1)' });
+        });
+      });
+
+      // initial focus trap friendly: allow arrow nav from hub hint as well
+      const hint = document.getElementById('kbd-hint');
+      hint.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown') pets[0].focus();
+      });
+
+      // Accessibility: when focusing the first petal with keyboard, show hint visibility
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Tab') {
+          hint.style.opacity = '1';
+          hint.style.transform = 'translateY(0)';
+        }
+      });
+
+      // small safety: set tabindex for petals (they're buttons so already focusable)
+      petals.forEach(p => p.setAttribute('tabindex', '0'));
+
+      // optional: responsive reflow - ensure petals do not overlap dangerously on tiny screens
+      window.addEventListener('resize', () => {
+        // nothing major here; layout built with rotations so it scales gracefully
+      });
+    })();
+  </script>
+</body>
+</html>
