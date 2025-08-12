@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Nykaa Petal Buttons</title>
+<style>
+:root{
+  --bg:#0f1020;
+  --size:520px;
+  --radius:160px;
+  --hub-size:120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#0b0b12,#141425);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#fff}
+.flower{position:relative;width:var(--size);height:var(--size);}
+
+/* center hub */
+.hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--hub-size);height:var(--hub-size);border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff66a3,#ff007f);box-shadow:0 8px 30px rgba(255,0,127,0.18);font-weight:700;font-size:1rem}
+
+/* petal base */
+.petal{position:absolute;left:50%;top:50%;width:170px;height:64px;padding:8px 16px;border-radius:36px 36px 20px 20px;border:none;color:#fff;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(2,6,23,0.6);transition:transform .24s cubic-bezier(.2,.9,.3,1),box-shadow .24s;user-select:none}
+
+/* explicit transforms to avoid cross-browser calc issues */
+.p1{ transform: translate(-50%,-50%) rotate(-90deg)  translateY(calc(-1 * var(--radius))) rotate(90deg); background:linear-gradient(135deg,#FF007F,#FF66A3); }
+.p2{ transform: translate(-50%,-50%) rotate(-18deg)  translateY(calc(-1 * var(--radius))) rotate(18deg);  background:linear-gradient(135deg,#FF66A3,#FF9ABA); }
+.p3{ transform: translate(-50%,-50%) rotate(54deg)   translateY(calc(-1 * var(--radius))) rotate(-54deg); background:linear-gradient(135deg,#FFB2CF,#FFD1DC); color:#2b0b13; box-shadow:0 8px 24px rgba(0,0,0,0.28); }
+.p4{ transform: translate(-50%,-50%) rotate(126deg)  translateY(calc(-1 * var(--radius))) rotate(-126deg); background:linear-gradient(135deg,#FF66A3,#FF99BC); }
+.p5{ transform: translate(-50%,-50%) rotate(198deg)  translateY(calc(-1 * var(--radius))) rotate(-198deg); background:linear-gradient(135deg,#FF007F,#FF66A3); }
+
+/* hover + focus */
+.petal:hover,.petal:focus{ transform: translate(-50%,-50%) scale(1.06); box-shadow:0 18px 40px rgba(255,0,127,0.12); outline:none }
+.petal:active{ transform: translate(-50%,-50%) scale(.98); transition:transform .12s }
+
+/* responsive */
+@media (max-width:520px){ :root{--size:92vmin; --radius:calc(var(--size)/3.2); --hub-size:96px} .petal{width:135px;height:56px} }
+
+.hint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:12px;color:rgba(255,255,255,0.6)}
+</style>
+</head>
+<body>
+  <div class="flower" role="navigation" aria-label="Nykaa petal navigation">
+    <div class="hub" id="hub">Nykaa<br><span style="font-size:12px;font-weight:600;opacity:.95">Quick Actions</span></div>
+
+    <button class="petal p1" id="b1">Inventory</button>
+    <button class="petal p2" id="b2">Orders</button>
+    <button class="petal p3" id="b3">Campaigns</button>
+    <button class="petal p4" id="b4">Analytics</button>
+    <button class="petal p5" id="b5">Settings</button>
+
+    <div class="hint">Tip: open in a browser (Safari/Chrome). Tab to focus. </div>
+  </div>
+
+  <script>
+    // tiny click feedback
+    document.querySelectorAll('.petal').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const hub = document.getElementById('hub');
+        hub.animate([{ transform:'translate(-50%,-50%) scale(1.06)' }, { transform:'translate(-50%,-50%)' }], { duration:180, easing:'cubic-bezier(.2,.9,.3,1)'});
+        console.log('Clicked:', btn.textContent.trim());
+      });
+    });
+  </script>
+</body>
+</html>
