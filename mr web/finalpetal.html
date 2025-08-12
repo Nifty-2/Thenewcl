@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nykaa Internal Tool</title>
+  <style>
+    body {
+      background-color: #fef6f9;
+      font-family: 'Inknut Antiqua', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #e80071;
+      margin-bottom: 40px;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .nykaa-button {
+      background-color: #e80071;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.25s ease, background-color 0.25s ease;
+      will-change: transform;
+    }
+
+    .nykaa-button:hover {
+      background-color: #d00065;
+      transform: scale(1.08);
+    }
+
+    .nykaa-button:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+  <h1>Nykaa Internal Tool</h1>
+  <div class="button-container">
+    <button class="nykaa-button">Dashboard</button>
+    <button class="nykaa-button">Analytics</button>
+    <button class="nykaa-button">Product Search</button>
+    <button class="nykaa-button">Reports</button>
+    <button class="nykaa-button">Settings</button>
+  </div>
+</body>
+</html>
