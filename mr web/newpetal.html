@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nykaa Petal Layout</title>
+<style>
+  body {
+    background: #121223;
+    font-family: sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .petal-layout {
+    position: relative;
+    width: 400px;
+    height: 400px;
+  }
+
+  .hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #FF66A3, #FF007F);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(255,0,127,0.4);
+  }
+
+  .petal {
+    position: absolute;
+    width: 140px;
+    height: 60px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #FF007F, #FF66A3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .petal:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255,0,127,0.4);
+  }
+
+  /* Position each petal in a circle */
+  .p1 { top: 0; left: 50%; transform: translateX(-50%); }
+  .p2 { top: 25%; right: 0; transform: translateY(-50%); }
+  .p3 { bottom: 25%; right: 0; transform: translateY(50%); }
+  .p4 { bottom: 0; left: 50%; transform: translateX(-50%); }
+  .p5 { bottom: 25%; left: 0; transform: translateY(50%); }
+
+</style>
+</head>
+<body>
+  <div class="petal-layout">
+    <div class="hub">Nykaa</div>
+    <button class="petal p1">Inventory</button>
+    <button class="petal p2">Orders</button>
+    <button class="petal p3">Campaigns</button>
+    <button class="petal p4">Analytics</button>
+    <button class="petal p5">Settings</button>
+  </div>
+</body>
+</html>
